@@ -23,6 +23,13 @@ const FALLBACK_SEED = [
  * Synchronizes the internal set with the latest OFAC SDN list.
  */
 export async function syncOfacList() {
+  if (process.env.SKIP_OFAC_SYNC === 'true') {
+    logger.warn('[Sanctions] Skipping OFAC SDN list sync (SKIP_OFAC_SYNC=true) to save memory.');
+    FALLBACK_SEED.forEach(a => sanctionedAddresses.add(a.toLowerCase()));
+    isUnavailable = true;
+    return;
+  }
+  
   logger.info('[Sanctions] Starting OFAC SDN list sync...');
   try {
     const controller = new AbortController();
