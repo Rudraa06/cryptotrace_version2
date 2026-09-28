@@ -28,6 +28,11 @@ from typing import List
 
 app = FastAPI(title="CryptoTrace ML Microservice", version="1.0.0")
 
+@app.get("/")
+def read_root():
+    return {"status": "ok", "service": "cryptotrace-ml"}
+
+
 API_KEY_NAME = "X-API-Key"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=True)
 INTERNAL_API_KEY = os.getenv("INTERNAL_API_KEY")
