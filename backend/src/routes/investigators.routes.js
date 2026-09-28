@@ -117,6 +117,7 @@ investigatorsRouter.patch('/:id', asyncRoute(async (req, res) => {
   await runInTransaction('WRITE', async (tx) => {
     const result = await tx.run(
       `MATCH (i:Investigator {id: $id})
+       WHERE i.email <> 'admin@cybercell.gov.in'
        SET i.isActive = $isActive
        RETURN i`,
       { id, isActive }
@@ -148,6 +149,7 @@ investigatorsRouter.delete('/:id', asyncRoute(async (req, res) => {
   await runInTransaction('WRITE', async (tx) => {
     const result = await tx.run(
       `MATCH (i:Investigator {id: $id})
+       WHERE i.email <> 'admin@cybercell.gov.in'
        DETACH DELETE i
        RETURN count(i) AS deletedCount`,
       { id }

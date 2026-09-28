@@ -192,12 +192,19 @@ export default function AdminDashboard({ onClose }) {
                           </td>
                           <td className="p-4 text-right">
                             <div className="flex justify-end gap-2">
-                              <button onClick={() => handleToggleActive(inv.id, inv.isActive)} disabled={inv.id === user.id} className={'text-xs px-3 py-1.5 rounded border transition-colors ' + (inv.id === user.id ? 'opacity-30 cursor-not-allowed border-slate-600 text-slate-500' : inv.isActive ? 'border-red-500/30 text-red-400 hover:bg-red-500/10' : 'border-green-500/30 text-green-400 hover:bg-green-500/10')}>
-                                {inv.isActive ? 'Deactivate' : 'Reactivate'}
-                              </button>
-                              <button onClick={() => handleDelete(inv.id)} disabled={inv.id === user.id} className={'text-xs px-3 py-1.5 rounded border transition-colors ' + (inv.id === user.id ? 'opacity-30 cursor-not-allowed border-slate-600 text-slate-500' : 'border-red-600/50 text-red-500 hover:bg-red-600/10')}>
-                                Delete
-                              </button>
+                              {(() => {
+                                const isProtected = inv.id === user.id || inv.email === 'admin@cybercell.gov.in';
+                                return (
+                                  <>
+                                    <button onClick={() => handleToggleActive(inv.id, inv.isActive)} disabled={isProtected} className={'text-xs px-3 py-1.5 rounded border transition-colors ' + (isProtected ? 'opacity-30 cursor-not-allowed border-slate-600 text-slate-500' : inv.isActive ? 'border-red-500/30 text-red-400 hover:bg-red-500/10' : 'border-green-500/30 text-green-400 hover:bg-green-500/10')}>
+                                      {inv.isActive ? 'Deactivate' : 'Reactivate'}
+                                    </button>
+                                    <button onClick={() => handleDelete(inv.id)} disabled={isProtected} className={'text-xs px-3 py-1.5 rounded border transition-colors ' + (isProtected ? 'opacity-30 cursor-not-allowed border-slate-600 text-slate-500' : 'border-red-600/50 text-red-500 hover:bg-red-600/10')}>
+                                      Delete
+                                    </button>
+                                  </>
+                                );
+                              })()}
                             </div>
                           </td>
                         </tr>
