@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/AuthContext.jsx';
+import { API_BASE } from '../utils/constants.js';
 
 export default function Login() {
   const { login, completeMfa, error } = useAuth();
@@ -45,7 +46,7 @@ export default function Login() {
     setLocalError(null);
     setForgotMessage(null);
     try {
-      const res = await fetch('/api/auth/forgot-password', {
+      const res = await fetch(API_BASE + '/api/auth/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -62,7 +63,7 @@ export default function Login() {
 
   const fetchMfaSetup = async (token) => {
     try {
-      const res = await fetch('/api/auth/mfa/setup', {
+      const res = await fetch(API_BASE + '/api/auth/mfa/setup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tempToken: token })
@@ -80,7 +81,7 @@ export default function Login() {
     setIsSubmitting(true);
     setLocalError(null);
     try {
-      const res = await fetch('/api/auth/mfa/verify', {
+      const res = await fetch(API_BASE + '/api/auth/mfa/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tempToken, code: mfaCode })
