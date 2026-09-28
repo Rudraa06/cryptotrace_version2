@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/AuthContext.jsx';
+import { fetchJson } from '../api/client.js';
 
 export default function AdminDashboard({ onClose }) {
   const { user } = useAuth();
@@ -27,9 +28,7 @@ export default function AdminDashboard({ onClose }) {
   const fetchInvestigators = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/investigators');
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || data.error || 'Failed to fetch investigators');
+      const data = await fetchJson('/api/investigators');
       setInvestigators(data.investigators);
     } catch (err) {
       setError(err.message);
@@ -41,9 +40,7 @@ export default function AdminDashboard({ onClose }) {
   const fetchAuditLogs = async () => {
     try {
       setAuditLoading(true);
-      const res = await fetch('/api/audit');
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || data.error || 'Failed to fetch audit logs');
+      const data = await fetchJson('/api/audit');
       setAuditLogs(data.logs || []);
     } catch (err) {
       setError(err.message);
@@ -54,13 +51,11 @@ export default function AdminDashboard({ onClose }) {
 
   const handleToggleActive = async (id, currentStatus) => {
     try {
-      const res = await fetch('/api/investigators/' + id, {
+      await fetchJson('/api/investigators/' + id, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isActive: !currentStatus })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || data.error || 'Failed to update status');
       setInvestigators(prev => prev.map(inv => inv.id === id ? { ...inv, isActive: !currentStatus } : inv));
     } catch (err) {
       alert(err.message);
@@ -70,9 +65,7 @@ export default function AdminDashboard({ onClose }) {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to permanently delete this investigator? This cannot be undone.')) return;
     try {
-      const res = await fetch('/api/investigators/' + id, { method: 'DELETE' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || data.error || 'Failed to delete investigator');
+      await fetchJson('/api/investigators/' + id, { method: 'DELETE' });
       setInvestigators(prev => prev.filter(inv => inv.id !== id));
     } catch (err) {
       alert(err.message);
@@ -82,13 +75,11 @@ export default function AdminDashboard({ onClose }) {
   const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/investigators', {
+      await fetchJson('/api/investigators', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || data.error || 'Failed to create investigator');
       alert('Investigator created successfully! (Email integration coming in next step to send activation token)');
       setShowAddModal(false);
       setFormData({ name: '', email: '', role: 'INVESTIGATOR', department: 'General' });
