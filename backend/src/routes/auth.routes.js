@@ -191,8 +191,8 @@ authRouter.post('/mfa/verify', asyncRoute(async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: true,
+      sameSite: 'none',
       maxAge: 12 * 60 * 60 * 1000 // 12 hours
     });
 
@@ -221,8 +221,8 @@ authRouter.post('/mfa/verify', asyncRoute(async (req, res) => {
 authRouter.post('/logout', requireAuth, asyncRoute(async (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: true,
+    sameSite: 'none',
   });
   logger.info('Investigator logged out', { id: req.investigator.id });
   res.json({ ok: true, message: 'Logged out successfully.' });
