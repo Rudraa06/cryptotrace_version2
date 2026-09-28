@@ -96,11 +96,7 @@ npm run dev
 
 ---
 
-## 🔒 Default Login Credentials
-Once the system is running, access the dashboard at `http://localhost:5173`. 
-If you seeded the database using the admin script, you can log in using:
-*   **Email:** `admin@cybercell.gov.in`
-*   **Password:** `CryptoTrace123!`
+
 
 ---
 
