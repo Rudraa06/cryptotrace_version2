@@ -89,7 +89,7 @@ export default function Login() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message || data.error || 'Invalid code');
       
-      completeMfa(data.investigator);
+      completeMfa(data.investigator, data.token);
     } catch (err) {
       setLocalError(err.message);
     } finally {

@@ -22,7 +22,10 @@ export const requireAuth = async (req, res, next) => {
   }
 
   try {
-    const token = req.cookies?.token;
+    const authHeader = req.headers.authorization;
+    const bearerToken = authHeader && authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
+    const token = req.cookies?.token || bearerToken;
+    
     if (!token) {
       return res.status(401).json({ ok: false, error: { code: 'UNAUTHORIZED', message: 'No authentication token provided.' } });
     }

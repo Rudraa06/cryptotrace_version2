@@ -39,10 +39,14 @@ async function request(path, opts = {}) {
   const timeout = setTimeout(() => controller.abort(), opts.timeoutMs ?? 120_000);
 
   try {
+    const token = localStorage.getItem('ct_token');
     const headers = { 
       'X-Requested-With': 'XMLHttpRequest',
       ...opts.headers 
     };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
     const response = await fetch(url, {
       signal: controller.signal,
       cache: 'no-store',

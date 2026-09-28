@@ -56,7 +56,8 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const completeMfa = (userData) => {
+  const completeMfa = (userData, token) => {
+    if (token) localStorage.setItem('ct_token', token);
     setUser(userData);
   };
 

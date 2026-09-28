@@ -206,7 +206,8 @@ authRouter.post('/mfa/verify', asyncRoute(async (req, res) => {
         email: investigator.email,
         role: investigator.role,
         department: investigator.department
-      }
+      },
+      token: token // Return token for localStorage fallback in strict browsers
     });
 
   } catch (err) {
