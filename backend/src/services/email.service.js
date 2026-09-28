@@ -50,8 +50,8 @@ async function sendBrevoEmail(to, subject, htmlContent) {
  * Sends an account activation email with a setup link.
  */
 export async function sendActivationEmail(email, token, name) {
-  // Use frontend URL from env, default to local if not set
-  const baseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  // Use frontend URL from env, default to production vercel if not set
+  const baseUrl = process.env.FRONTEND_URL || 'https://cryptotrace-version2.vercel.app';
   const activationLink = `${baseUrl}/activate?token=${token}`;
 
   const html = `
@@ -75,7 +75,7 @@ export async function sendActivationEmail(email, token, name) {
  * Sends a password reset email.
  */
 export async function sendPasswordResetEmail(email, token) {
-  const baseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const baseUrl = process.env.FRONTEND_URL || 'https://cryptotrace-version2.vercel.app';
   const resetLink = `${baseUrl}/reset-password?token=${token}`;
 
   const html = `
