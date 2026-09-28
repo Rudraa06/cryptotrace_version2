@@ -1,0 +1,286 @@
+/* ---------------------------------------------------------------------------
+ * CryptoTrace — Design System
+ * ---------------------------------------------------------------------------
+ * Dark cyber-analytical theme. Tailwind v4 import, then custom properties
+ * and utility classes that Tailwind does not ship.
+ */
+
+/* --- Google Font ------------------------------------------------- */
+@import "tailwindcss";
+
+/* === TAILWIND v4 THEME OVERRIDES ========================================= */
+@theme {
+  --font-sans: 'Outfit', 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', ui-monospace, monospace;
+
+  /* Colours — Matching Official CryptoTrace Logo Palette */
+  --color-bg-primary: #11141D; /* Deep Obsidian Slate */
+  --color-bg-card: #1D2230; /* Elevated Card Slate */
+  --color-bg-card-hover: #262C3D;
+  --color-border-subtle: #2D3448;
+  --color-border-accent: #3B82F6; /* Sapphire Blue */
+
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #64748B;
+  --color-text-accent: #3B82F6;
+
+  /* Accent gradient (Action) */
+  --color-accent-from: #3B82F6;
+  --color-accent-to: #8B5CF6;
+
+  /* Copilot gradient */
+  --color-copilot-from: #06B6D4;
+  --color-copilot-to: #3B82F6;
+
+  /* Status */
+  --color-status-ok: #10B981;
+  --color-status-warn: #F59E0B;
+  --color-status-error: #E11D48; /* Crimson */
+
+  /* Node Semantic Colors */
+  --color-node-source: #22c55e; /* Green */
+  --color-node-intermediary: #94a3b8; /* Slate/Grey */
+  --color-node-exchange: #ef4444; /* Red */
+  --color-node-context: #475569;
+  --color-node-dex: #8B5CF6;
+  --color-node-bridge: #EA580C;
+  --color-node-mixer: #E11D48;
+}
+
+/* === BASE ================================================================ */
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+/* Subtle forensic dot-matrix background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.05) 0%, var(--color-bg-primary) 70%);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+/* === SCROLLBAR =========================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.35);
+}
+
+/* === UTILITY CLASSES ===================================================== */
+
+/* Glassmorphism card - Replaced with Flat Structured Panels */
+.glass-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.glass-card:hover {
+  background: var(--color-bg-card-hover);
+  border-color: rgba(245, 158, 11, 0.2); /* Subtle Amber hover */
+}
+
+/* Flat minimalist panel */
+.dark-panel {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 4px;
+}
+
+/* Accent gradient text matching logo */
+.gradient-text {
+  background: linear-gradient(135deg, #FFFFFF 25%, #60A5FA 65%, #A78BFA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-copilot {
+  background: linear-gradient(135deg, #38BDF8 0%, #818CF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Accent gradient button */
+.btn-accent {
+  background: linear-gradient(135deg, var(--color-accent-from) 0%, var(--color-accent-to) 100%);
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-accent:hover {
+  background: var(--color-accent-to);
+}
+
+.btn-accent:active {
+  transform: scale(0.97);
+}
+
+.btn-accent:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Liquid sweeping gradient hover - Replaced with professional state */
+.btn-liquid {
+  position: relative;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--color-text-primary);
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.btn-liquid:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Glowing focus state for inputs */
+.glow-input:focus {
+  outline: none;
+  border-color: var(--color-accent-from);
+  box-shadow: 0 0 0 1px var(--color-accent-from);
+}
+
+/* === ANIMATIONS ========================================================== */
+
+/* Pulsing glow for exchange nodes (used by the canvas painter) */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Fade-in for panels */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.35s ease-out both;
+}
+
+/* Slide-in from right for sidebar content */
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.3s ease-out both;
+}
+
+/* Loading spinner */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 1.5s linear infinite;
+}
+
+/* Shimmer skeleton */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(148, 163, 184, 0.06) 25%,
+    rgba(148, 163, 184, 0.12) 50%,
+    rgba(148, 163, 184, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+/* Status dot */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-dot.ok {
+  background: var(--color-status-ok);
+  box-shadow: 0 0 6px var(--color-status-ok);
+}
+
+.status-dot.error {
+  background: var(--color-status-error);
+  box-shadow: 0 0 6px var(--color-status-error);
+}
+
+.status-dot.warn {
+  background: var(--color-status-warn);
+  box-shadow: 0 0 6px var(--color-status-warn);
+}
+
+/* Monospace data */
+.addr, .mono-data {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+}
+
+.mono-large {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.label-muted {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}

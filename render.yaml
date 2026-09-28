@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: cryptotrace-api
+    env: node
+    rootDir: sih/backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: cryptotrace-redis
+          property: connectionString
+      - key: PORT
+        value: 4001
+      - key: NODE_ENV
+        value: production
+      - key: MOCK_MODE
+        value: "false"
+      - key: MAX_ADDRESSES_PER_TRACE
+        value: "400"
+      - key: NEO4J_URI
+        sync: false
+      - key: NEO4J_USER
+        sync: false
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: ALCHEMY_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - type: redis
+    name: cryptotrace-redis
+    ipAllowList: [] # internal only

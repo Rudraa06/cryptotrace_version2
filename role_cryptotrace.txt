@@ -1,0 +1,21 @@
+
+The system is built using Role-Based Access Control (RBAC) to ensure security and prevent unauthorized expenditure of API credits (like Alchemy RPC calls).
+
+Here is the exact breakdown of the authority given to the three tiers:
+
+### 1. ANALYST (Read-Only)
+*   **Powers:** Can log in and view the dashboard, browse historical graphs, timelines, and read existing case files and data that is already in the Neo4j database. 
+*   **Restrictions:** Cannot ingest new complaints, cannot trigger live on-chain traces (because traces consume API credits), and cannot manage users.
+*   **Purpose:** Perfect for junior staff, auditors, or external agency observers who just need to read the data without modifying cases or spending system resources.
+
+### 2. INVESTIGATOR (Standard Operative)
+*   **Powers:** Has all Analyst privileges, **plus** the ability to actively ingest new complaints from the public, trigger live on-chain blockchain tracing, and use the AI Copilot to generate automated case reports.
+*   **Restrictions:** Cannot access the Admin/User Management dashboard. Cannot use the highly resource-intensive Cross-Chain Correlation Engine.
+*   **Purpose:** The standard role for your daily cyber crime operatives actively working on active cases.
+
+### 3. SUPERVISOR (Admin)
+*   **Powers:** The god-tier account. Has all Investigator privileges, **plus**:
+    *   Full access to the **Admin Dashboard** to invite, deactivate, and permanently delete staff accounts.
+    *   Exclusive access to the **Correlation Engine**, because correlating multi-hop paths between two distant wallets is incredibly computationally heavy and requires high-level clearance.
+    *   *(Coming up next)*: Exclusive access to the **Audit Logs** to monitor every single action, login, and trace initiated by the staff below them.
+*   **Purpose:** Reserved for Cyber Cell chiefs and system administrators (like your `admin@cybercell.gov.in` account).

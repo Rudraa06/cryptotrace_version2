@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+torch
+torch_geometric
+networkx
+neo4j
+pydantic
