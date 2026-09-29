@@ -63,12 +63,18 @@ export default function ExportReportBtn({ traceData }) {
         graphScreenshot
       };
 
+      const token = localStorage.getItem('ct_token');
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest', // CSRF bypass for same-origin
+      };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const res = await fetch(`${API_BASE}/api/export/evidence`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest', // CSRF bypass for same-origin
-        },
+        headers,
         credentials: 'include', // Send the HttpOnly session cookie
         body: JSON.stringify(payload),
       });
